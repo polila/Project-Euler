@@ -19,8 +19,8 @@
 ; S = (n+1)*(n)/2
 (define (sum-sequence n) (/ (* n (+ n 1)) 2))
 ; the sum of all multiples 'a' or 'b' below 'c'
-; is equal to the of the sum of all multiples
-; 'a' or 'b' minus 'a' and 'b', hence the union
+; is equal to the sum of all multiples
+; 'a' or 'b' minus 'a' and 'b'(least common multiple), hence the union
 ; of the integer multiples in the set 'a' or 'b' below 'c'
 ; minus the intersection of the set 'a' and 'b' below 'c'
 ; a(Z) = 1*3, 2*3,..., 1000/3 = 3*(1, 2,..., 333)
