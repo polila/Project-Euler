@@ -28,28 +28,15 @@
                   #f)
               #t))
         (check-symmetry ab (length ab) 1))
-; b = max product = the square of the max integer from the set [min,max] of n-digits, hence for 3-digits 999^2
-; n = factor 1 integer
-; k = factor 2 integer
-; 3-digit = (largest-palindrome 998001 99 99 0
-(define (largest-palindrome b n k max)
-  (define (find-n ab a)
-    (if (< a 100)
-        0
-        (if (= (remainder ab a) 0)
-            a
-            (find-n ab (- a 1)))))
-  (define (find-k ab b)
-    (if (< b 100)
-        0
-        (if (= (remainder ab b) 0)
-            b
-            (find-k ab (- b 1)))))
-  (if (> max 0) ; since iteration starts at the maximum range k^2, when max is not zero the largest palindrome is found
-      max
-      (if (palindrome? b)
-      ; when a palindrome is found, a call will be made to find its n-digit factors, in this case 3-digit = [100, 999]
-          (if (and (= (* (find-k b k) (find-n b n)) b) (< max b))
-              (largest-palindrome (- b 1) n k b)
-              (largest-palindrome (- b 1) n k max))
-          (largest-palindrome (- b 1) n k max))))
+; LOL, still won't work :(
+(define (largest-palindrome max-integer)
+  (define (iter i j count)
+    (if (> j 10)
+        (if (and (palindrome? (* i j)) (< count (* i j)))
+            (iter i (- j 1) (* i j))
+            (iter i (- j 1) count))
+        (iter (- i 1) (- i 1) count))
+    (if (< i 10)
+        count
+        0))
+  (iter max-integer max-integer 0))
