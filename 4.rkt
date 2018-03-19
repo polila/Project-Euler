@@ -28,20 +28,26 @@
                   #f)
               #t))
         (check-symmetry ab (length ab) 1))
-
-; a = min product = n^2
 ; b = max product = k^2
 ; n = min integer (i.e., 2-digits would be 10)
 ; k = max integer (i.e., 2-digits would be 99)
-(define (largest-palindrome a b n k)
-  (define (find-factor ab a b)
-    (if (> a b)
+(define (largest-palindrome b n k max)
+  (define (find-n ab a)
+    (if (< a 10)
+        0
+        (if (= (remainder ab a) 0)
+            a
+            (find-n ab (- a 1)))))
+  (define (find-k ab b)
+    (if (< b 10)
         0
         (if (= (remainder ab b) 0)
             b
-            (find-factor ab a (- b 1)))))
-  (if (> a b)
-      0
+            (find-k ab (- b 1)))))
+  (if (> max 0)
+      max
       (if (palindrome? b)
-          (find-factor b n k)
-          (largest-palindrome a (- b 1) n k))))
+          (if (and (= (* (find-k b k) (find-n b n)) b) (< max b))
+              (largest-palindrome (- b 1) n k b)
+              (largest-palindrome (- b 1) n k max))
+          (largest-palindrome (- b 1) n k max))))
