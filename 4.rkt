@@ -4,6 +4,7 @@
 
 ; Find the largest palindrome made from the product of two 3-digit numbers.
 
+
 (define (exp a b)
     (define (iter product count)
       (if (= count b)
@@ -28,15 +29,13 @@
                   #f)
               #t))
         (check-symmetry ab (length ab) 1))
-; LOL, still won't work :(
-(define (largest-palindrome max-integer)
-  (define (iter i j count)
-    (if (> j 10)
-        (if (and (palindrome? (* i j)) (< count (* i j)))
-            (iter i (- j 1) (* i j))
-            (iter i (- j 1) count))
-        (iter (- i 1) (- i 1) count))
-    (if (< i 10)
-        count
-        0))
-  (iter max-integer max-integer 0))
+
+(define (largest-palindrome a b max)
+ (if (> b 100)
+     (if (and (palindrome? (* a b)) (< max (* a b)))
+         (largest-palindrome a (- b 1) (* a b))
+         (largest-palindrome a (- b 1) max))
+     (largest-palindrome (- a 1) (- a 1) (* a b)))
+  (if (< a 100)
+      max
+      0))
