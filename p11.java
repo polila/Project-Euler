@@ -62,26 +62,64 @@ public class p11 {
 		char ch;
 
 		int sum, n;
-		
+
 		for (int i = 0, k = 0; i < 20; i++) {
-			
 			for (int j = 0; j < 20; j++, k++) {
 
 				sum = 0;
 
-				while (!(str.charAt(k) == ' ')) {
+				while (k < str.length() && !(str.charAt(k) == ' ')) {
 
 					n = Integer.parseInt(Character.toString(str.charAt(k)));
 
 					sum = sum * 10 + n;
 
 					k++;
-
-					System.out.println(sum);
 				}
 
 				list[i][j] = sum;
 			}
+		}
+
+		//int horizontalMax, verticalMax, diagonalMax;
+		
+		horizontal(list);
+
+	}
+
+	public static void horizontal(int[][] arr) {
+
+		int case1, case2, max;
+
+		max = 0;
+
+		for (int i = 0; i < 20; i++) {
+
+			for (int j = 0; j < 17; j++) {
+
+				case1 = 0;
+				
+				int k = j;
+				
+				for (k = j; k <= j + 3; k++) {
+					case1+= arr[i][k];
+				}
+				System.out.println("(i,j->k):= " + "(" + i + "," + j + "-" + (k-1) +"):= " + case1);
+				
+			}
+			/*
+			for (int m = arr.length - 1; m >= 3; m--) {
+				for (int n = m; n > n - 4; n--) {
+					case2+= arr[i][m];
+				}
+			}
+			if (case1 > case2) {
+				max = case1;
+			}
+			else {
+				max = case2;
+			}
+			*/
 		}
 	}
 }
