@@ -1,7 +1,5 @@
 /*
-
 In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
-
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -22,11 +20,8 @@ In the 20×20 grid below, four numbers along a diagonal line have been marked in
 20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
-
 The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
-
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
-
 */
 
 import java.util.*;
@@ -81,45 +76,109 @@ public class p11 {
 			}
 		}
 
-		//int horizontalMax, verticalMax, diagonalMax;
-		
-		horizontal(list);
-
+		findMax(list);
 	}
 
-	public static void horizontal(int[][] arr) {
+	public static void findMax(int[][] arr) {
 
-		int case1, case2, max;
+		int max = 0;
 
-		max = 0;
+		int rowProduct, columnProduct;
+
+		int rowMax, columnMax;
 
 		for (int i = 0; i < 20; i++) {
+			
+			rowMax = 0;
+
+			columnMax = 0;
 
 			for (int j = 0; j < 17; j++) {
 
-				case1 = 0;
-				
-				int k = j;
-				
-				for (k = j; k <= j + 3; k++) {
-					case1+= arr[i][k];
+				rowProduct = 1;
+
+				columnProduct = 1;
+
+				for (int k = j; k < j + 4; k++) {
+
+					rowProduct = rowProduct * arr[i][k];
+
+					columnProduct = columnProduct * arr[k][i];
 				}
-				System.out.println("(i,j->k):= " + "(" + i + "," + j + "-" + (k-1) +"):= " + case1);
 				
-			}
-			/*
-			for (int m = arr.length - 1; m >= 3; m--) {
-				for (int n = m; n > n - 4; n--) {
-					case2+= arr[i][m];
+				if (rowProduct > columnProduct) {
+					max = rowProduct;
+				}
+				else {
+					max = columnProduct;
 				}
 			}
-			if (case1 > case2) {
-				max = case1;
-			}
-			else {
-				max = case2;
-			}
-			*/
 		}
+
+		int diagonalProduct, diagonalMax;
+
+		for (int p = 3; p < 20; p++) {
+
+			int q, r, l, count;
+
+			q = p;
+				
+			r = 0;
+
+			count = 0;
+
+			while (q >= 3) {
+
+				l = q;
+
+				diagonalProduct = 1;
+
+				do {
+
+					diagonalProduct = diagonalProduct * arr[l][r];
+
+					l--;
+
+					r++;
+
+				} while (l >= q - 3);
+
+				if (diagonalProduct > max) {
+					max = diagonalProduct;
+				}
+					
+				count++;
+
+				r = count;
+					
+				q--;
+			}
+
+			if (p == 19) {
+
+				for (int i = 1; i >= 16; i++) {
+					for (int j = p; j >= i + 3; j--) {
+
+						diagonalProduct = 1;
+
+						int k a;
+
+						k = j;
+						
+						a = i;
+
+						do {
+
+							diagonalProduct = diagonalProduct * arr[k][a];
+
+							
+
+						} while ();
+					}
+				}
+			}
+		}
+
+		System.out.print(max);
 	}
 }
