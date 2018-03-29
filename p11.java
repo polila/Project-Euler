@@ -153,32 +153,35 @@ public class p11 {
 					
 				q--;
 			}
-
-			if (p == 19) {
-
-				for (int i = 1; i >= 16; i++) {
-					for (int j = p; j >= i + 3; j--) {
-
-						diagonalProduct = 1;
-
-						int k a;
-
-						k = j;
-						
-						a = i;
-
-						do {
-
-							diagonalProduct = diagonalProduct * arr[k][a];
-
-							
-
-						} while ();
-					}
-				}
-			}
 		}
 
-		System.out.print(max);
+		for (int i = 1; i <= 16; i++) {
+
+			int j, k, a, count; 
+			j = 19;
+			a = i;
+			k = 19;
+			count = 0;
+
+			for (j = 19; j >= i + 3; j--) {
+
+				diagonalProduct = 1;
+						
+				do {
+
+					diagonalProduct = diagonalProduct * arr[k][a];
+					System.out.println("row: " + 19 + "| row: " + k + ", column: " + a + "| number:= " + arr[k][a]);
+
+					a++;
+					k--;
+					count++;
+
+				} while (count < 4);
+				k = j - 1;
+				a = i + 1;
+				count = 0;
+				System.out.println();
+			}
+		}
 	}
 }
