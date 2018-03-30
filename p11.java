@@ -1,6 +1,5 @@
 /*
 In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
-
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
 81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -22,7 +21,6 @@ In the 20×20 grid below, four numbers along a diagonal line have been marked in
 20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
 The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
-
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
 */
 
@@ -72,14 +70,12 @@ public class p11 {
 			}
 		}
 
-		//int max = findMax(list);
+		int max = findMax(list);
 
-		//System.out.println(max);
-
-		findMax(list);
+		System.out.println(max);
 	}
 
-	public static void findMax(int[][] arr) {
+	public static int findMax(int[][] arr) {
 
 		int max, temp;
 		max = 0;
@@ -97,7 +93,6 @@ public class p11 {
 					rowProduct = rowProduct * arr[i][k];
 					columnProduct = columnProduct * arr[k][i];
 				}
-
 				if (rowProduct > columnProduct) {
 					max = rowProduct;
 				}
@@ -119,11 +114,9 @@ public class p11 {
 			count = 0;
 
 			while (index >= 3) {
-				
 				row = index;
 				diagonalProductLeft = 1;
 				diagonalProductRight = 1;
-
 				do {
 					diagonalProductLeft = diagonalProductLeft * arr[row][left];
 					diagonalProductRight = diagonalProductRight * arr[row][right];
@@ -163,6 +156,7 @@ public class p11 {
 			count = 0;
 
 			for (j = 19; j >= i + 3; j--) {
+
 				diagonalProductLeft = 1;	
 				do {
 					diagonalProductLeft = diagonalProductLeft * arr[row][column];
@@ -184,24 +178,29 @@ public class p11 {
 
 		// Diagonal case from right to left; row 19 column 18 to 3, diagonalProductRight
 		for (int i = 18; i >= 3; i--) {
+			for (int j = 19; j - i + 2 >= 3; j--) {
 
-			int count = 0;
-
-			for (int j = 19; j - i + 3 >= 3; j--) {
-
-				do {
-
-
-					count++;
-
-				} while (count < 4);
-
+				int row, column, count;
+				row = j;
+				column = i;
 				count = 0;
-
+				diagonalProductRight = 1;
+				do {
+					diagonalProductRight = diagonalProductRight * arr[row][column];
+					//System.out.println("row: " + row + " | column: " + column + " | number: " + arr[row][column]);	
+					row--;
+					column--;
+					count++;
+				} while (count < 4);
+				if (diagonalProductRight > max) {
+					max = diagonalProductRight;
+				}
+				//System.out.println("MAX:= " + max);
+				//System.out.println();
+				count = 0;
 			}
 		}
 
-		//System.out.println(max);
-		//return max;
+		return max;
 	}
 }
