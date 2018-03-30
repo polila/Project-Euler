@@ -72,16 +72,16 @@ public class p11 {
 			}
 		}
 
-		//int max;
-		findMax(list);
+		//int max = findMax(list);
 
 		//System.out.println(max);
+
+		findMax(list);
 	}
 
 	public static void findMax(int[][] arr) {
 
 		int max, temp;
-
 		max = 0;
 
 		int rowProduct, columnProduct;
@@ -89,12 +89,15 @@ public class p11 {
 		// Horizontal case from row 0 to row 19
 		for (int i = 0; i < 20; i++) {
 			for (int j = 0; j < 17; j++) {
+
 				rowProduct = 1;
 				columnProduct = 1;
+
 				for (int k = j; k < j + 4; k++) {
 					rowProduct = rowProduct * arr[i][k];
 					columnProduct = columnProduct * arr[k][i];
 				}
+
 				if (rowProduct > columnProduct) {
 					max = rowProduct;
 				}
@@ -108,15 +111,19 @@ public class p11 {
 		// Diagonal case from left to right; row 0 to 19, diagonalProductLeft
 		// Diagonal case from right to left; row 0 to 19, diagonalProductRight
 		for (int i = 3; i < 20; i++) {
+
 			int left, right, row, count, index;
 			index = i;
 			left = 0;
 			right = 19;
 			count = 0;
+
 			while (index >= 3) {
+				
 				row = index;
 				diagonalProductLeft = 1;
 				diagonalProductRight = 1;
+
 				do {
 					diagonalProductLeft = diagonalProductLeft * arr[row][left];
 					diagonalProductRight = diagonalProductRight * arr[row][right];
@@ -131,7 +138,9 @@ public class p11 {
 					row--;
 					left++;
 					right--;
+
 				} while (row >= index - 3);
+
 				if (temp > max) {
 					max = temp;
 				}
@@ -146,11 +155,13 @@ public class p11 {
 
 		// Diagonal case from left to right; row 19 column 1 to 16, diagonalProductLeft
 		for (int i = 1; i <= 16; i++) {
+
 			int j, row, column, count;
 			j = 19;
 			column = i;
 			row = 19;
 			count = 0;
+
 			for (j = 19; j >= i + 3; j--) {
 				diagonalProductLeft = 1;	
 				do {
@@ -159,22 +170,36 @@ public class p11 {
 					column++;
 					row--;
 					count++;
-
 				} while (count < 4);
 				if (diagonalProductLeft > max) {
 					max = diagonalProductLeft;
 				}
 				//System.out.print("MAX:= " + max);
 				//System.out.println("\n");
-				row = j - 1;
+				row = j;
 				column = i + 1;
 				count = 0;
 			}
 		}
 
+		// Diagonal case from right to left; row 19 column 18 to 3, diagonalProductRight
+		for (int i = 18; i >= 3; i--) {
+
+			int count = 0;
+
+			for (int j = 19; j - i + 3 >= 3; j--) {
+
+				do {
 
 
+					count++;
 
+				} while (count < 4);
+
+				count = 0;
+
+			}
+		}
 
 		//System.out.println(max);
 		//return max;
