@@ -7,7 +7,7 @@ Find the largest palindrome made from the product of two 3-digit numbers.
 
 import java.util.*;
 
-public class 4 {
+public class p04 {
   
   public static void main(String[] args) {
     

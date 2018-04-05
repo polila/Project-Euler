@@ -30,7 +30,7 @@ What is the value of this product?
 
 import java.util.*;
 
-public class 8 {
+public class p08 {
 	public static void main(String[] args) {
 
 		Scanner in = new Scanner(System.in);

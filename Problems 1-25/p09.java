@@ -16,7 +16,7 @@ reference: http://www.friesian.com/pythag.htm
 
 import java.util.*;
 
-public class p9 {
+public class p09 {
 
 	public static void main(String[] args) {
 
