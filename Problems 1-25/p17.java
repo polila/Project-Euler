@@ -5,49 +5,91 @@ https://projecteuler.net/problem=17
 If the numbers 1 to 5 are written out in words: 
 one, two, three, four, five, then there are 
 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
-
 If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words,
 how many letters would be used?
-
 NOTE: Do not count spaces or hyphens. 
 For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. 
 The use of "and" when writing out numbers is in compliance with British usage.
 
 */
 
+import java.util.*;
+
 public class p17 {
 	public static void main(String[] args) {
 
-		//[1,1000]
-		final int thousand = 1;
-		int hundredsDigit, hundred, and;
-		//100,101,...,999
-		hundredsDigit = 9 * 100;
-		//101,102, 
-		hundred = 9 * 100;
-		//101,102,...,199,201,...,901,...,999
-		and = 99 * 9;
-		
-		String s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12;
-		s1 = "one".length();letters
-		s2 = "two".length();
-		s3 = "three".length();
-		s4 = "four".length();
-		s5 = "five".length();
-		s6 = "six".length();
-		s7 = "seven".length();
-		s8 = "eight".length();
-		s9 = "nine".length();
-		s10 = "ten".length();
-		s11 = "eleven".length();
-		s12 = "twelve".length();
+		Hashtable<Integer, String> ones = new Hashtable<Integer, String>();
+		ones.put(1, "one");
+		ones.put(2, "two");
+		ones.put(3, "three");
+		ones.put(4, "four");
+		ones.put(5, "five");
+		ones.put(6, "six");
+		ones.put(7, "seven");
+		ones.put(8, "eight");
+		ones.put(9, "nine");
+		Integer foo = new Integer(9);
+		System.out.print(ones.get(foo));
 
-		//String[] arr = new String[]
+		Hashtable<Integer, String> tens = new Hashtable<Integer, String>();
+		tens.put(10, "ten");
+		tens.put(1, "teen");
+		tens.put(11, "eleven");
+		tens.put(12, "twelve");
+		tens.put(2, "twen"); // twe-lve twe-nty
+		tens.put(3, "thir"); // thir-teen, thir-ty
+		tens.put(4, "for"); // for-ty
+		tens.put(5, "fif"); // fif-teen, fif-ty
+		tens.put(6, ones.get(6));
+		tens.put(7, ones.get(7));
+		tens.put(8, ones.get(8));
+		tens.put(9, ones.get(9));
 
-		char ch = '8';
+		String[][] str = new String[1000][];
 
-		String str = Character.toString(ch);
+		int j, k, digits, sum; 
 
-		System.out.print(ch + " | " + str);
+		sum = 0;
+
+		for (int i = 1; i <= 12; i++) {
+			
+			j = i;
+			
+			digits = 0;
+
+			k = 0;
+
+			while (j > 0) {
+
+				k = k * 10 + (j % 10);
+
+				digits = digits + 1;
+
+				j = j / 10;
+			}
+			
+			str[i] = new String[digits];
+
+			Integer n;
+			
+			while (k > 0 && digits >= 0) {
+
+				n = new Integer(k % 10);
+
+				str[i][digits - 1] = ones.get(n);
+				System.out.println(ones.get(n));
+				k = k / 10;
+
+				digits = digits - 1;
+			}
+			System.out.println();
+		}
+
+		for (int m = 0; m < str.length; m++) {
+			for (int n = 0; n < str[m].length; n++) {
+				System.out.print(str[m][n] + "-->");
+			}
+			System.out.println();
+		}
 	}
 }
