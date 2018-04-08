@@ -20,8 +20,9 @@ import java.util.*;
 public class p17 {
 	public static void main(String[] args) {
 
+		int sum = 0;
+
 		Hashtable<Integer, String> ones = new Hashtable<Integer, String>();
-		ones.put(0, "zero");
 		ones.put(1, "one");
 		ones.put(2, "two");
 		ones.put(3, "three");
@@ -31,32 +32,30 @@ public class p17 {
 		ones.put(7, "seven");
 		ones.put(8, "eight");
 		ones.put(9, "nine");
-		//Integer foo = new Integer(9);
-		//System.out.print(ones.get(foo));
-		//String foo = "eight";
-		//System.out.print(ones.get(foo));
+		ones.put(0, " ");
 
-		Hashtable<Integer, String> tens = new Hashtable<Integer, String>();
-		tens.put(10, "ten");
-		tens.put(1, "teen");
-		tens.put(11, "eleven");
-		tens.put(12, "twelve");
-		tens.put(2, "twen"); // twe-lve twe-nty
-		tens.put(3, "thirty"); // thir-teen, thir-ty
-		tens.put(4, "forty"); // for-ty
-		tens.put(5, "fifty"); // fif-teen, fif-ty
-		tens.put(6, "sixty");
-		tens.put(7, "seventy");
-		tens.put(8, "eighty");
-		tens.put(9, "ninety");
+		int a = 1;
+
+		Integer b;
 		
-		String[][] str = new String[20][];
+		while (a < 10) {
 
-		int j, k, digits, sum; 
+			b = new Integer(a % 10);
 
-		sum = 0;
+			sum = sum + ones.get(b).length();
 
-		for (int i = 1; i <= 20; i++) {
+			System.out.println("number: " + a + " | word: " + ones.get(b) + " | length of word: " + ones.get(b).length() + " | sum of letters: " + sum);
+
+			a++;
+		}
+
+		int range = 999;
+
+		String[][] str = new String[range - 9][];
+
+		int j, k, digits; 
+
+		for (int i = 10; i <= range; i++) {
 			
 			k = 0;
 
@@ -73,48 +72,136 @@ public class p17 {
 				j = j / 10;
 			}
 			
-			str[i - 1] = new String[digits];
-
-			Integer n;
+			str[i - 10] = new String[digits];
 			
 			int index = 0;
+
+			Integer n;
 
 			while (index < digits) {
 
 				n = new Integer(k % 10);
 
-				if (digits >= 3) {
+				str[i - 10][index] = ones.get(new Integer(k % 10));
 
-				}
-				else if (digits >= 2) {
+				k = k / 10;
+				
+				index++;
+			}
+		}
+
+		Hashtable<String, String> tens = new Hashtable<String, String>();
+		tens.put("one", "teen");
+		tens.put("two", "twenty");
+		tens.put("three", "thirty");
+		tens.put("four", "forty");
+		tens.put("five", "fifty");
+		tens.put("six", "sixty");
+		tens.put("seven", "seventy");
+		tens.put("eight", "eighty");
+		tens.put("nine", "ninety");
+
+		String hundred, ten, one, conCat;
+
+		for (int p = 0; p < str.length; p++) {
+			
+			hundred = "";
+
+			ten = "";
+
+			one = "";
+
+			digits = str[p].length;
+			
+			if (digits == 3) {
+			
+				hundred = str[p][0] + "hundred";
+
+				if (str[p][1] == " " && str[p][2] == " ") {
+
+					hundred = hundred;
 
 				}
 				else {
-					
+
+					hundred += "and";
+
+					one = str[p][2];
+
+					if (str[p][1] != " ") {
+
+						ten = tens.get(str[p][1]);
+
+						if (ten == "teen") {
+							
+							String temp = ten;
+
+							switch (one) {
+								case " ": ten = "ten"; one = "";
+									break;
+								case "one": ten = "eleven"; one = "";
+									break;
+								case "two": ten = "twelve"; one = "";
+									break;
+								case "three": ten = "thir"; one = temp;
+									break;
+								case "five": ten = "fif"; one = temp;
+									break;
+								case "eight": ten = "eigh"; one = temp;
+									break;
+								default: ten = one; one = temp;
+									break;
+							}
+						}
+					}
+
+					if ((one != "") && (one != "teen") && (str[p][2] != " ")) {
+						one = str[p][2];
+					}
 				}
-				index++;
-
-				//System.out.print(ones.get(n) + " ");
-				k = k / 10;
 			}
-			//System.out.println();
+
+			else {
+
+				ten = tens.get(str[p][0]);
+
+				one = str[p][1];
+
+				if (ten == "teen") {
+							
+				String temp = ten;
+
+					switch (one) {
+						case " ": ten = "ten"; one = "";
+							break;
+						case "one": ten = "eleven"; one = "";
+							break;
+						case "two": ten = "twelve"; one = "";
+							break;
+						case "three": ten = "thir"; one = temp;
+							break;
+						case "five": ten = "fif"; one = temp;
+							break;
+						case "eight": ten = "eigh"; one = temp;
+							break;
+						default: ten = one; one = temp;
+							break;
+					}
+				}
+			}
+			if (one == "" || one == " ") {
+				conCat = hundred + "" + ten;
+			}
+			else {
+				conCat = hundred + "" + ten + "" + one;
+			}
+			sum += conCat.length();
+
+			System.out.println("number: " + (p+10) + " | word: " + hundred  + " " + ten + " " + " "+ one +  " | concatenated: " + conCat + " | length of word: " + conCat.length() + " | sum of letters: " + sum);
 		}
 
-		for (int p = 0; p < str.length; p++) {
+		sum = sum + "onethousand".length();
 
-			System.out.print(str[p].length + ": ");
-			
-			//digits = str[p].length;
-
-			for (int q = 0; q < str[p].length; q++) {
-				
-				//System.out.print("[" + q + "]" + str[p][q]); //ones.get(str[p][q]) + " ");
-
-				//number = number * 10 + Integer.parseInt(ones.get(str[p][q]));
-
-			}
-			System.out.println();
-		}
-		
+		System.out.println("\nThe sum of the letters from 1 to " + (range + 1) + " is: " + sum);
 	}
 }
