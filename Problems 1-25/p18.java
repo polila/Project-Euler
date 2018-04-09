@@ -1,5 +1,7 @@
 /*
 
+https://projecteuler.net/problem=18
+
 By starting at the top of the triangle below and moving to adjacent numbers on the row below,
 the maximum total from top to bottom is 23.
 
@@ -39,7 +41,12 @@ import java.util.*;
 public class p18 {
 	
 	public static void main(String[] args) {
-
+		/*
+		String str = "3 " +
+					 "7 4 " +
+					 "2 4 6 " +
+					 "8 5 9 3";
+		*/
 		String str = "75 "+
 					 "95 64 " +
 					 "17 47 82 " +
@@ -55,10 +62,12 @@ public class p18 {
 					 "91 71 52 38 17 14 91 43 58 50 27 29 48 " +
 					 "63 66 04 68 89 53 67 30 73 16 69 87 40 31 " +
 					 "04 62 98 27 23 09 70 98 73 93 38 53 60 04 23";
-
+		
 		String[] list = str.split(" ");
 
-		int[][] arr = new int[15][];
+		int rows = 14;
+
+		int[][] arr = new int[rows + 1][];
 
 		for (int i = 0, k = 0; i < arr.length; i++) {
 			
@@ -67,31 +76,59 @@ public class p18 {
 			for (int j = 0; j < i + 1; j++, k++) {
 
 				arr[i][j] = Integer.parseInt(list[k]);
+
+				System.out.print(arr[i][j] + " ");
 			}
+			System.out.println();
 		}
 
-		int[][] nCr = pascalTriangle(arr.length);
+		int[] sums = new int[rows + 1];
 
+		for (int k = 0; k < arr.length; k++) {
 
-		int[][] sums = new int[15][];
-
-		for (int i = 0; i < sums.length; i++) {
-
-			sums[i] = new int[nCr[nCr.length - 1][i]];
-
-			for (int j = 0; j < sums[i].length; j++) {
-				
-				sum[j] = routes(arr); 
-			}
+			sums[k] = routes(arr,rows,k);
 		}
+
+		Arrays.sort(sums);
+
+		System.out.println("\nThe maximum total from top to bottom is: " + sums[sums.length - 1]);
 	}
 
-	public static int routes(int[] arr) {
-		int sum = 0;
-
+	public static int routes(int[][] arr, int n, int k) {
 		
+		int sum, left, right;
+		sum = arr[n][k];
 
-		return sum;
+		if (n == 0 && k ==0) {
+
+			return arr[n][k];
+		}
+
+		else if (k == 0) {
+
+			return arr[n][k] + routes(arr, n - 1, k);
+		}
+
+		else if (k == n) {
+
+			return arr[n][k] + routes(arr, n - 1, k - 1);
+		}
+
+		else {
+
+			left = sum + routes(arr, n - 1, k - 1);
+
+			right = sum + routes(arr, n - 1, k);
+
+			if (left > right) {
+
+				return left;
+			}
+			else {
+
+				return right;
+			}
+		}
 	}
 
 	public static int[][] pascalTriangle(int size) {
@@ -132,6 +169,6 @@ public class p18 {
 
 		int[][] arr = pascalTriangle(n);
 
-		return arr[n-1][k];
+		return arr[n - 1][k];
 	}
 }
