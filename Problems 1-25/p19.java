@@ -45,51 +45,62 @@ public class p19 {
 		months.put(11, "November");
 		months.put(12, "December");
 
-		int count = 0;
+		int min, max;
+		min = 1900;
+		max = 2000;
 
-		String[][] arr = new String[12 * (2000 - 1900 + 1)][];
+		String[][] arr = new String[12 * (max - min + 1)][];
 
-		for (int year = 1900, years = 0, index = 0, totalDays = 1; year <= 2000; year++, years++) {
+		// Total days starts at 1 to make modular arithmetic easier when accounting for days 
+		// (i.e., 1 Monday, 2 Tuesday, etc.) and since the first day, hence, 0th day on 1 Jan 1900 is Monday.
+		for (int year = min, index = 0, totalDays = 1; year <= max; year++) {
 
 			for (int month = 1; month <= 12; month++, index++) {
 
 				arr[index] = new String[numberOfDays(month,year)];
 
+				int sum = 1;
+				
+				System.out.println(months.get(new Integer(month)) + " " + year);
+
 				for (int day = 1; day <= numberOfDays(month, year); day++, totalDays++) {
-					
-					if (isLeapYear(year)) {
-						if (totalDays % 7 == 0) {
 
-							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 366));
-							System.out.println("Year: " + year + " | Years: " + years + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7 + 7) % 366)));
-						}
-						else {
+					if (totalDays % 7 == 0) {
 
-							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 366));
-						System.out.println("Year: " + year + " | Years: " + years + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7) % 366)));
-						}
+						arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 365));							
 					}
 					else {
-						if (totalDays % 7 == 0) {
 
-							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 365));							
-							System.out.println("Years: " + year + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7 + 7) % 365)));
-						}
-						else {
-
-							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 365));							
-							System.out.println("Years: " + year + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7) % 365)));
-						}
+						arr[index][day - 1] = days.get(new Integer((totalDays % 7) % 365));							
 					}
+
+					if (sum > 7) {
+
+						System.out.println();
+						
+						sum = 1;
+					}
+
+					System.out.print(totalDays + ":= " + arr[index][day - 1] + ", " + day + " | ");
+
+					sum++;
 				}
+
+				System.out.println("\n");
 			}
 		}
 
-		for (int i = 0; i < arr.length; i++) {
-			for ()
-		}
+		int count = 0;
 
-		//System.out.println(count);
+		for (int i = 1; i < arr.length; i++) {
+
+			if (arr[i][0] == "Sunday") {
+
+				count++;
+			}
+		}
+		// Subtract 1 from count since the total days were overstated by 1 before inititallizing array
+		System.out.println("Number of Sundays that fell on the first of the month from: 1/Jan/1901 - 31/Dec/2000: " + (count - 1));
 	}
 
 	public static int numberOfDays (int month, int year) {
