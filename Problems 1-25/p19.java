@@ -31,22 +31,65 @@ public class p19 {
 		days.put(6, "Saturday");
 		days.put(7, "Sunday");
 
-		String[][] months = new String[100 * 12][];
+		Hashtable<Integer, String> months = new Hashtable<Integer, String>();
+		months.put(1, "January");
+		months.put(2, "February");
+		months.put(3, "March");
+		months.put(4, "April");
+		months.put(5, "May");
+		months.put(6, "June");
+		months.put(7, "July");
+		months.put(8, "August");
+		months.put(9, "September");
+		months.put(10, "October");
+		months.put(11, "November");
+		months.put(12, "December");
 
-		int sum = 0;
+		int count = 0;
 
-		for (int year = 1901; year <= 2018; year++) {
+		String[][] arr = new String[12 * (2000 - 1900 + 1)][];
 
-			for (int month = 1; month <= 12; month++) {
+		for (int year = 1900, years = 0, index = 0, totalDays = 1; year <= 2000; year++, years++) {
 
-				for (int day = 1; day <= numberOfDays(month, year); day++) {
-	
-					sum = sum + 1;
+			for (int month = 1; month <= 12; month++, index++) {
+
+				arr[index] = new String[numberOfDays(month,year)];
+
+				for (int day = 1; day <= numberOfDays(month, year); day++, totalDays++) {
+					
+					if (isLeapYear(year)) {
+						if (totalDays % 7 == 0) {
+
+							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 366));
+							System.out.println("Year: " + year + " | Years: " + years + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7 + 7) % 366)));
+						}
+						else {
+
+							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 366));
+						System.out.println("Year: " + year + " | Years: " + years + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7) % 366)));
+						}
+					}
+					else {
+						if (totalDays % 7 == 0) {
+
+							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 365));							
+							System.out.println("Years: " + year + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7 + 7) % 365)));
+						}
+						else {
+
+							arr[index][day - 1] = days.get(new Integer((totalDays % 7 + 7) % 365));							
+							System.out.println("Years: " + year + " | Days: "+ totalDays + " | " + days.get(new Integer((totalDays % 7) % 365)));
+						}
+					}
 				}
 			}
 		}
 
-		System.out.print(sum);
+		for (int i = 0; i < arr.length; i++) {
+			for ()
+		}
+
+		//System.out.println(count);
 	}
 
 	public static int numberOfDays (int month, int year) {
@@ -63,7 +106,7 @@ public class p19 {
 			case 2:
 				if (isLeapYear(year)) {
 					days = 29;
-				} 
+				}
 				else {
 					days = 28;
 				}
@@ -77,6 +120,6 @@ public class p19 {
 
 	public static boolean isLeapYear(int year) {
 
-		return (year % 4 == 0 && year % 100  != 0) || (year % 400 == 0);
+		return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 	}
 }
