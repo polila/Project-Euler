@@ -23,6 +23,65 @@ public class p23 {
 
 	public static void main(String[] args) {
 
+		int limit = 28123;
+
+		int[] arr = abundants(limit);
+
+		int sum = 0;
+
+		for (int i = 1; i <= limit; i++) {
+
+			if (!abundantSum(i, arr)) {
+
+				sum = sum + i;
+			}
+		}
+
+		System.out.print(sum);
+	}
+
+	public static boolean abundantSum(int x, int[] arr) {
+
+		for (int i = 0; i < arr.length; i++) {
+
+			int n , count;
+
+			for (int j = i; j < arr.length; j++) {
+
+				n = arr[i] + arr[j];
+
+				if (n == x) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public static int[] abundants(int range) {
+
+		int count = 0;
+
+		for (int i = 1; i <= range; i++) {
+			if (isAbundant(i)) {
+				count++;
+			}
+		}
+
+		int[] arr = new int[count];
+
+		for (int i = 0, j = 1; j <= range; j++) {
+
+			if (isAbundant(j)) {
+
+				arr[i] = j;
+				i++;
+			}
+		}
+
+		return arr;
 	}
 
 	public static boolean isAbundant(int n) {
