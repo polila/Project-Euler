@@ -14,23 +14,26 @@ What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 
 */
 
 import java.util.*;
-
+import java.math.*;
 
 public class p24 {
 
 	public static void main(String[] args) {
 
-		int digits = 4;
-
+		int digits = 10;
+		
 		permutation(digits,factorial(digits));
+		
 	}
 
 	public static void permutation(int n, int range) {
 
 		int[] arr = new int[n];
-		
+		int[] duplicate = new int[n];
+
 		for (int i = 0; i < n; i++) {
-			arr[i] = i + 1;
+			arr[i] = i;
+			duplicate[i] = i;
 		}
 
 		int count, i, j, temp, index;
@@ -40,18 +43,26 @@ public class p24 {
 
 		String[] str = new String[range];
 
+		index = 0;
+
 		while (count < range) {
 
-			if (j < 0) {
+			int a = 0;
 
-				i = arr.length - 1;
-				j = i - 1;
+			while (a < factorial(arr.length - 1)) {
 
-				temp = arr[i];
-				arr[i] = arr[0];
-				arr[0] = temp;
-			}
-			else {
+				if (j == 0) {
+					i = arr.length - 1;
+					j = i - 1;
+				}
+
+				String concat = "";
+
+				for (int m = 0; m < arr.length; m++) {
+					concat = concat + Integer.toString(arr[m]);
+				}
+
+				str[count] = concat;
 
 				temp = arr[i];
 				arr[i] = arr[j];
@@ -59,30 +70,26 @@ public class p24 {
 
 				i--;
 				j--;
+				a++;
+				count++;
 			}
 
-			String concat = "";
-
-			for (int k = 0; k < arr.length; k++) {
-				concat = concat + Integer.toString(arr[k]);
+			index++;
+			if (index > arr.length - 1) {
+				break;
 			}
-			str[count] = concat;
 
-			count++;
+			temp = duplicate[index - 1];
+			arr[0] = duplicate[index];
+			arr[index] = temp;
+
 		}
 
-		int[] list = new int[str.length];
+		BigDecimal[] list = new BigDecimal[str.length];
 
-		for (int k = 0; k < str.length; k++) {
-			
-			list[k] = Integer.valueOf(str[k]);
-			System.out.println(list[k] + " term: " + (k + 1));
-		}
-
-		Arrays.sort(list);
-
-		for (int k = 0; k < list.length; k++) {
-			//System.out.println(list[k] + " term: " + (k + 1));
+		for (int p = 0; p < str.length; p++) {
+			list[i] = new BigDecimal(str[p]);
+			System.out.println(list[i]);
 		}
 
 		//return str;
