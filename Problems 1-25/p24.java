@@ -20,49 +20,20 @@ public class p24 {
 
 	public static void main(String[] args) {
 
-		int digits = 4;
+		int digits = 3;
 
 		int[] arr = new int[digits];
 
-		for (int i = 0; i < arr.length; i++) {
+		for (int i = 0; i < digits; i++) {
 			
 			arr[i] = i;
 		}
 
-		permutation(arr);
+		permutation(arr, digits);
 	}
+	public static void permutation(int[] arr, int n) {
 
-	public static void permutation(int[] list) {
-
-		int[] arr = list;
-
-		for (int count = 0; count < factorial(list.length); count++) {
-
-			String str = "";
-
-			for (int n = 0; n < list.length; n++) {
-
-				str = str + list[n];
-			}
-
-			System.out.println(str);
-
-			int i, j, k;
-			i = arr.length - 1;
-			j = i - 1;
-
-			while (j >= 1) {
-
-				int k = arr[i];
-				arr[i] = arr[j];
-				arr[j] = k;
-			
-				i--;
-				j--;
-			}
-		}
-
-
+		// Work in progress
 	}
 
 	public static int factorial(int a) {
